@@ -871,10 +871,15 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
   }
 
   .navbar.scrolled {
-    background: var(--surface-card-strong);
-    backdrop-filter: blur(12px);
+    background: rgba(248, 242, 237, 0.8);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
     border-bottom: 1px solid var(--border-subtle);
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  html[data-theme='dark'] .navbar.scrolled {
+    background: rgba(26, 21, 18, 0.8);
   }
 
   .navbar-container {
@@ -1645,9 +1650,10 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
 
   .code-block {
     background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--accent);
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 4px 16px rgba(230, 92, 70, 0.1);
   }
 
   .code-header {
@@ -1656,7 +1662,7 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
     gap: 8px;
     padding: 12px 16px;
     background: var(--surface-overlay);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid rgba(230, 92, 70, 0.2);
   }
 
   .code-content {
@@ -1788,14 +1794,14 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
   .hackable-btn.active,
   .os-btn.active,
   .win-shell-btn.active {
-    background: var(--coral-bright);
-    color: var(--bg-deep);
+    background: var(--accent);
+    color: white;
     font-weight: 600;
   }
 
   .mode-btn.active {
-    background: var(--cyan-bright);
-    color: var(--bg-deep);
+    background: var(--accent);
+    color: white;
     font-weight: 600;
   }
 
@@ -1827,14 +1833,14 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
   }
 
   .beta-btn:hover {
-    border-color: var(--cyan-bright);
-    color: var(--cyan-bright);
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .beta-btn.active {
-    background: var(--surface-cyan-soft);
-    border-color: var(--cyan-bright);
-    color: var(--cyan-bright);
+    background: var(--surface-coral-soft);
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .beta-label {
@@ -1849,7 +1855,7 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
 
   .pm-cmd,
   .pm-install {
-    color: var(--cyan-bright);
+    color: var(--accent);
   }
 
   .code-block pre {
