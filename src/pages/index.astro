@@ -867,14 +867,19 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
     left: 0;
     right: 0;
     z-index: 100;
-    transition: all 0.3s ease;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .navbar.scrolled {
     background: rgba(248, 242, 237, 0.8);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom-color: var(--border-subtle);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
