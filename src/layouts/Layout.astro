@@ -365,9 +365,17 @@ const {
           }
         });
 
-        // Initialize with current preference
+        // Initialize button states on page load
         const currentPreference = root.dataset.themePreference || 'system';
-        applyTheme(currentPreference, null, false);
+        const allButtons = document.querySelectorAll('[data-theme-btn]');
+        allButtons.forEach(btn => {
+          const btnTheme = btn.getAttribute('data-theme-btn');
+          if (btnTheme === currentPreference) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
       })();
     </script>
   </body>
