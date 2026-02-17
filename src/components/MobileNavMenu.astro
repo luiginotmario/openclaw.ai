@@ -1,0 +1,198 @@
+---
+import Icon from './Icon.astro';
+---
+
+<div class="mobile-nav" data-mobile-nav>
+  <button
+    class="mobile-nav-trigger"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    data-mobile-nav-trigger
+  >
+    <Icon icon="lucide:menu" size={18} />
+  </button>
+
+  <div class="mobile-nav-menu" data-mobile-nav-menu aria-hidden="true">
+    <a href="#getting-started" class="mobile-nav-link">Getting Started</a>
+    <a href="#features" class="mobile-nav-link">Features</a>
+    <a href="/integrations" class="mobile-nav-link">Integrations</a>
+    <a href="/blog" class="mobile-nav-link">Blog</a>
+    <div class="mobile-nav-divider"></div>
+    <button class="mobile-theme-item" type="button" data-mobile-theme="system">
+      <Icon icon="lucide:monitor" size={16} />
+      <span>System</span>
+    </button>
+    <button class="mobile-theme-item" type="button" data-mobile-theme="light">
+      <Icon icon="lucide:sun" size={16} />
+      <span>Light</span>
+    </button>
+    <button class="mobile-theme-item" type="button" data-mobile-theme="dark">
+      <Icon icon="lucide:moon" size={16} />
+      <span>Dark</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  .mobile-nav {
+    display: none;
+    position: relative;
+  }
+
+  .mobile-nav-trigger {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    background: var(--surface-card);
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-trigger:hover {
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+  }
+
+  .mobile-nav-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: min(300px, calc(100vw - 32px));
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    background: var(--surface-card-strong);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    display: grid;
+    gap: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.2s ease;
+    z-index: 120;
+  }
+
+  .mobile-nav-menu.is-open {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-nav-link,
+  .mobile-theme-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 10px 12px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-theme-item:hover {
+    background: var(--surface-interactive);
+    color: var(--text-primary);
+  }
+
+  .mobile-theme-item.active {
+    background: var(--surface-coral-soft);
+    color: var(--accent);
+  }
+
+  .mobile-theme-item :global(svg) {
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 4px 2px;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-nav {
+      display: block;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-mobile-nav]');
+    if (!root) return;
+
+    const trigger = root.querySelector('[data-mobile-nav-trigger]');
+    const menu = root.querySelector('[data-mobile-nav-menu]');
+    const links = root.querySelectorAll('.mobile-nav-link');
+    const themeItems = root.querySelectorAll('.mobile-theme-item');
+
+    const closeMenu = () => {
+      if (!menu || !trigger) return;
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+
+    const syncThemeState = () => {
+      const current = document.documentElement.dataset.themePreference || 'system';
+      themeItems.forEach((item) => {
+        const value = item.getAttribute('data-mobile-theme');
+        item.classList.toggle('active', value === current);
+      });
+    };
+
+    if (trigger && menu) {
+      trigger.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('is-open');
+        menu.setAttribute('aria-hidden', String(!isOpen));
+        trigger.setAttribute('aria-expanded', String(isOpen));
+        syncThemeState();
+      });
+    }
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+
+    themeItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const value = item.getAttribute('data-mobile-theme');
+        const desktopBtn = document.querySelector(`.navbar-theme-btn[data-theme-btn="${value}"]`);
+        if (desktopBtn instanceof HTMLElement) {
+          desktopBtn.click();
+        }
+        syncThemeState();
+        closeMenu();
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof Node && !root.contains(target)) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) closeMenu();
+    });
+  })();
+</script>

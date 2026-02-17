@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import LobsterLogo from '../components/LobsterLogo.astro';
+import MobileNavMenu from '../components/MobileNavMenu.astro';
 import testimonials from '../data/testimonials.json';
 import { getPublishedBlogPosts } from '../lib/blog';
 
@@ -71,6 +72,7 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
       </div>
       
       <div class="navbar-right">
+        <MobileNavMenu />
         <div class="navbar-theme-switcher">
           <button class="navbar-theme-btn" type="button" data-theme-btn="system" aria-label="System theme" title="System theme">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1075,6 +1077,10 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
 
     .navbar-github {
       padding: 8px 12px;
+    }
+
+    .navbar-theme-switcher {
+      display: none;
     }
   }
 
