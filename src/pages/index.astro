@@ -27,10 +27,10 @@ const integrationPills = [
   { name: 'Spotify', icon: siIcon(siSpotify), color: '#1DB954' },
   { name: 'Hue', icon: siIcon(siPhilipshue), color: '#0065D3' },
   { name: 'Obsidian', icon: siIcon(siObsidian), color: '#7C3AED' },
-  { name: 'Twitter', icon: siIcon(siX), color: '#FFFFFF' },
+  { name: 'Twitter', icon: siIcon(siX), color: 'currentColor' },
   { name: 'Browser', icon: siIcon(siGooglechrome), color: '#4285F4' },
   { name: 'Gmail', icon: siIcon(siGmail), color: '#EA4335' },
-  { name: 'GitHub', icon: siIcon(siGithub), color: '#FFFFFF' },
+  { name: 'GitHub', icon: siIcon(siGithub), color: 'currentColor' },
 ];
 
 // Split top 30 into two rows for carousel
@@ -984,10 +984,18 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
     transition: all 0.2s ease;
   }
 
+  html[data-theme='light'] .navbar-github {
+    color: var(--primary);
+  }
+
   .navbar-github:hover {
     background: var(--surface-interactive-hover);
     border-color: var(--border-accent);
     color: var(--text-primary);
+  }
+
+  html[data-theme='light'] .navbar-github:hover {
+    color: var(--accent);
   }
 
   .navbar-github-text {
@@ -1490,6 +1498,13 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
     height: 16px;
     flex-shrink: 0;
     transition: all 0.2s ease;
+  }
+
+  /* Fix white icons in light mode */
+  html[data-theme='light'] .integration-pill :global(svg[color="#FFFFFF"]),
+  html[data-theme='light'] .integration-pill :global(svg path[fill="#FFFFFF"]) {
+    color: var(--primary);
+    fill: var(--primary);
   }
 
   .integration-pill:hover {
